@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>Controller Evolution | WebAR (AR.js)</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    
+    <!-- A-Frame and AR.js -->
+    <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
+    <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script>
+    <script type="module" crossorigin src="/assets/index-B2yrRJp8.js"></script>
+    <link rel="stylesheet" crossorigin href="/assets/index-DAMiX9Zr.css">
+  </head>
+  <body style="margin: 0; overflow: hidden;">
+    <!-- UI Overlay Layer -->
+    <div id="ui-layer">
+      <!-- Info Panel for Phases 1-5 -->
+      <div id="info-panel" class="panel-content">
+        <h1 id="phase-title" class="panel-title">Stage 1</h1>
+        <p id="phase-desc" class="panel-desc">Description goes here</p>
+      </div>
+
+      <!-- GameBoy Panel for Phase 6 -->
+      <div id="gameboy-panel" class="panel-gameboy" style="display: none;">
+        <div class="gameboy-body">
+          <div class="gameboy-screen-bezel">
+            <div class="screen-header">
+              <span class="power-light"></span>
+              <span>BATTERY</span>
+            </div>
+            <canvas id="game-canvas" width="160" height="144"></canvas>
+          </div>
+          
+          <div class="gameboy-controls">
+            <div class="dpad">
+              <div class="dpad-vertical">
+                <div class="dpad-button up" id="btn-up"></div>
+                <div class="dpad-button down" id="btn-down"></div>
+              </div>
+              <div class="dpad-horizontal">
+                <div class="dpad-button left" id="btn-left"></div>
+                <div class="dpad-button right" id="btn-right"></div>
+              </div>
+              <div class="dpad-center"></div>
+            </div>
+            <div class="action-buttons">
+              <div class="action-button-group">
+                <button class="action-btn b" id="btn-b"></button>
+                <span class="label">B</span>
+              </div>
+              <div class="action-button-group">
+                <button class="action-btn a" id="btn-a"></button>
+                <span class="label">A</span>
+              </div>
+            </div>
+          </div>
+          <div class="system-buttons">
+            <div class="sys-btn-group">
+              <div class="sys-btn select" id="btn-select"></div>
+              <span class="label">SELECT</span>
+            </div>
+            <div class="sys-btn-group">
+              <div class="sys-btn start" id="btn-start"></div>
+              <span class="label">START</span>
+            </div>
+          </div>
+          <div class="speaker-grill">
+            <div></div><div></div><div></div><div></div><div></div><div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Navigation UI -->
+      <nav class="carousel-nav">
+        <button id="nav-prev" class="nav-button" aria-label="Previous Panel">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+        </button>
+        <div class="nav-indicators" id="nav-indicators">
+          <!-- Populated via JS -->
+        </div>
+        <button id="nav-next" class="nav-button" aria-label="Next Panel">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
+        </button>
+      </nav>
+    </div>
+
+    <!-- WebAR Scene Layer -->
+    <a-scene 
+      embedded 
+      arjs="sourceType: webcam; debugUIEnabled: false;" 
+      renderer="logarithmicDepthBuffer: true; colorManagement: true;" 
+      vr-mode-ui="enabled: false">
+      
+      <a-assets>
+        <a-asset-item id="model1" src="/public/models/controller-1.glb"></a-asset-item>
+        <a-asset-item id="model2" src="/public/models/controller-2.glb"></a-asset-item>
+        <a-asset-item id="model3" src="/public/models/controller-3.glb"></a-asset-item>
+        <a-asset-item id="model4" src="/public/models/controller-4.glb"></a-asset-item>
+        <a-asset-item id="model5" src="/public/models/controller-5.glb"></a-asset-item>
+      </a-assets>
+
+      <a-marker preset="hiro">
+        <!-- Lights -->
+        <a-light type="ambient" color="#FFF" intensity="0.5"></a-light>
+        <a-light type="directional" color="#FFF" intensity="0.8" position="0 1 1"></a-light>
+
+        <!-- Models hovering 1 unit above the marker on the Y-axis -->
+        <a-gltf-model id="ar-model-0" src="#model1" position="0 1 0" scale="0.5 0.5 0.5" visible="true" 
+                      animation="property: position; from: 0 1 0; to: 0 1.2 0; dir: alternate; dur: 2000; easing: easeInOutSine; loop: true;">
+        </a-gltf-model>
+        <a-gltf-model id="ar-model-1" src="#model2" position="0 1 0" scale="0.5 0.5 0.5" visible="false" 
+                      animation="property: position; from: 0 1 0; to: 0 1.2 0; dir: alternate; dur: 2000; easing: easeInOutSine; loop: true;">
+        </a-gltf-model>
+        <a-gltf-model id="ar-model-2" src="#model3" position="0 1 0" scale="0.5 0.5 0.5" visible="false" 
+                      animation="property: position; from: 0 1 0; to: 0 1.2 0; dir: alternate; dur: 2000; easing: easeInOutSine; loop: true;">
+        </a-gltf-model>
+        <a-gltf-model id="ar-model-3" src="#model4" position="0 1 0" scale="0.5 0.5 0.5" visible="false" 
+                      animation="property: position; from: 0 1 0; to: 0 1.2 0; dir: alternate; dur: 2000; easing: easeInOutSine; loop: true;">
+        </a-gltf-model>
+        <a-gltf-model id="ar-model-4" src="#model5" position="0 1 0" scale="0.5 0.5 0.5" visible="false" 
+                      animation="property: position; from: 0 1 0; to: 0 1.2 0; dir: alternate; dur: 2000; easing: easeInOutSine; loop: true;">
+        </a-gltf-model>
+      </a-marker>
+      
+      <a-entity camera></a-entity>
+    </a-scene>
+    
+  </body>
+</html>

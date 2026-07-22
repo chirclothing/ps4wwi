@@ -71,12 +71,91 @@ body {
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   color: #fff; /* fallback */
+  animation: fadeInDown 0.4s ease-out forwards;
+}
+
+.panel-released {
+  font-size: 0.85rem;
+  font-weight: 600;
+  background: rgba(59, 130, 246, 0.2);
+  color: #60a5fa;
+  padding: 4px 12px;
+  border-radius: 12px;
+  margin-bottom: 1rem;
+  display: inline-block;
+  border: 1px solid rgba(59, 130, 246, 0.3);
+  animation: fadeIn 0.5s ease-out forwards;
 }
 
 .panel-desc {
   font-size: 1rem;
   color: var(--text-main);
-  line-height: 1.4;
+  line-height: 1.5;
+  margin-bottom: 1.5rem;
+  animation: fadeIn 0.6s ease-out forwards;
+}
+
+.features-section {
+  width: 100%;
+  text-align: left;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  padding-top: 1rem;
+  animation: fadeInUp 0.7s ease-out forwards;
+}
+
+.features-section h3 {
+  font-size: 1rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 0.75rem;
+}
+
+.features-list {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.features-list li {
+  background: rgba(255, 255, 255, 0.05);
+  color: #e2e8f0;
+  font-size: 0.85rem;
+  padding: 6px 12px;
+  border-radius: 99px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.2s ease;
+}
+
+.features-list li:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.3);
+  transform: translateY(-2px);
+}
+
+.features-list li::before {
+  content: '✦';
+  color: var(--accent);
+  font-size: 0.9rem;
+}
+
+@keyframes fadeInDown {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
 
 /* Navigation UI */
@@ -286,7 +365,9 @@ body {
 .dpad-button.left { top: 30px; left: 0; }
 .dpad-button.right { top: 30px; right: 0; }
 
-.dpad-button:active ~ .dpad-vertical,
+.dpad-button:active ~ .dpad-vertical {
+  box-shadow: inset 2px 2px 5px rgba(0,0,0,0.6);
+}
 .dpad-button:active ~ .dpad-horizontal {
   box-shadow: inset 2px 2px 5px rgba(0,0,0,0.6);
 }

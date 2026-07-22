@@ -8,19 +8,26 @@
     <link rel="stylesheet" href="/src/style.css" />
     
     <!-- A-Frame and AR.js -->
-    <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
-    <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script>
+    <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+    <script src="https://raw.githack.com/AR-js-org/AR.js/3.3.3/aframe/build/aframe-ar.js"></script>
   </head>
-  <body style="margin: 0; overflow: hidden;">
+  <body style="margin: 0; overflow: hidden; background-color: transparent;">
     <!-- UI Overlay Layer -->
     <div id="ui-layer">
-      <!-- Info Panel for Phases 1-5 -->
+      <!-- Info Panel for Phases 0-10 -->
       <div id="info-panel" class="panel-content">
-        <h1 id="phase-title" class="panel-title">Stage 1</h1>
-        <p id="phase-desc" class="panel-desc">Description goes here</p>
+        <h1 id="phase-title" class="panel-title">Controller Name</h1>
+        <div id="phase-released" class="panel-released">Released: 19XX</div>
+        <p id="phase-history" class="panel-desc">History goes here...</p>
+        <div class="features-section">
+          <h3>Unique Features</h3>
+          <ul id="phase-features" class="features-list">
+            <!-- Populated via JS -->
+          </ul>
+        </div>
       </div>
 
-      <!-- GameBoy Panel for Phase 6 -->
+      <!-- GameBoy Panel for Phase 11 -->
       <div id="gameboy-panel" class="panel-gameboy" style="display: none;">
         <div class="gameboy-body">
           <div class="gameboy-screen-bezel">
@@ -33,14 +40,14 @@
           
           <div class="gameboy-controls">
             <div class="dpad">
-              <div class="dpad-vertical">
-                <div class="dpad-button up" id="btn-up"></div>
-                <div class="dpad-button down" id="btn-down"></div>
-              </div>
-              <div class="dpad-horizontal">
-                <div class="dpad-button left" id="btn-left"></div>
-                <div class="dpad-button right" id="btn-right"></div>
-              </div>
+              <!-- Invisible click targets first so sibling selectors work -->
+              <div class="dpad-button up" id="btn-up"></div>
+              <div class="dpad-button down" id="btn-down"></div>
+              <div class="dpad-button left" id="btn-left"></div>
+              <div class="dpad-button right" id="btn-right"></div>
+              <!-- Visual parts -->
+              <div class="dpad-vertical"></div>
+              <div class="dpad-horizontal"></div>
               <div class="dpad-center"></div>
             </div>
             <div class="action-buttons">
@@ -92,11 +99,18 @@
       vr-mode-ui="enabled: false">
       
       <a-assets>
-        <a-asset-item id="model1" src="/public/models/controller-1.glb"></a-asset-item>
-        <a-asset-item id="model2" src="/public/models/controller-2.glb"></a-asset-item>
-        <a-asset-item id="model3" src="/public/models/controller-3.glb"></a-asset-item>
-        <a-asset-item id="model4" src="/public/models/controller-4.glb"></a-asset-item>
-        <a-asset-item id="model5" src="/public/models/controller-5.glb"></a-asset-item>
+        <a-asset-item id="model0" src="models/atari-2600.glb" crossorigin="anonymous"></a-asset-item>
+        <a-asset-item id="model1" src="models/nes-controller.glb" crossorigin="anonymous"></a-asset-item>
+        <a-asset-item id="model2" src="models/snes-controller.glb" crossorigin="anonymous"></a-asset-item>
+        <a-asset-item id="model3" src="models/ps1-controller.glb" crossorigin="anonymous"></a-asset-item>
+        <a-asset-item id="model4" src="models/n64-controller.glb" crossorigin="anonymous"></a-asset-item>
+        <!-- Placeholders for 6 through 11 -->
+        <a-asset-item id="model5" src="models/ps1-dualshock.glb" crossorigin="anonymous"></a-asset-item>
+        <a-asset-item id="model6" src="models/xbox-original.glb" crossorigin="anonymous"></a-asset-item>
+        <a-asset-item id="model7" src="models/xbox-360.glb" crossorigin="anonymous"></a-asset-item>
+        <a-asset-item id="model8" src="models/ps3-dualshock.glb" crossorigin="anonymous"></a-asset-item>
+        <a-asset-item id="model9" src="models/xbox-one.glb" crossorigin="anonymous"></a-asset-item>
+        <a-asset-item id="model10" src="models/ps4-dualshock.glb" crossorigin="anonymous"></a-asset-item>
       </a-assets>
 
       <a-marker preset="hiro">
@@ -104,21 +118,40 @@
         <a-light type="ambient" color="#FFF" intensity="0.5"></a-light>
         <a-light type="directional" color="#FFF" intensity="0.8" position="0 1 1"></a-light>
 
-        <!-- Models hovering 1 unit above the marker on the Y-axis -->
-        <a-gltf-model id="ar-model-0" src="#model1" position="0 1 0" scale="0.5 0.5 0.5" visible="true" 
-                      animation="property: position; from: 0 1 0; to: 0 1.2 0; dir: alternate; dur: 2000; easing: easeInOutSine; loop: true;">
+        <!-- Models hovering slightly above the marker -->
+        <a-gltf-model id="ar-model-0" src="#model0" position="0 0.1 0" scale="0.5 0.5 0.5" visible="true" 
+                      animation="property: position; from: 0 0.1 0; to: 0 0.2 0; dir: alternate; dur: 2000; easing: easeInOutSine; loop: true;">
         </a-gltf-model>
-        <a-gltf-model id="ar-model-1" src="#model2" position="0 1 0" scale="0.5 0.5 0.5" visible="false" 
-                      animation="property: position; from: 0 1 0; to: 0 1.2 0; dir: alternate; dur: 2000; easing: easeInOutSine; loop: true;">
+        <a-gltf-model id="ar-model-1" src="#model1" position="0 0.1 0" scale="0.5 0.5 0.5" visible="false" 
+                      animation="property: position; from: 0 0.1 0; to: 0 0.2 0; dir: alternate; dur: 2000; easing: easeInOutSine; loop: true;">
         </a-gltf-model>
-        <a-gltf-model id="ar-model-2" src="#model3" position="0 1 0" scale="0.5 0.5 0.5" visible="false" 
-                      animation="property: position; from: 0 1 0; to: 0 1.2 0; dir: alternate; dur: 2000; easing: easeInOutSine; loop: true;">
+        <a-gltf-model id="ar-model-2" src="#model2" position="0 0.1 0" scale="0.5 0.5 0.5" visible="false" 
+                      animation="property: position; from: 0 0.1 0; to: 0 0.2 0; dir: alternate; dur: 2000; easing: easeInOutSine; loop: true;">
         </a-gltf-model>
-        <a-gltf-model id="ar-model-3" src="#model4" position="0 1 0" scale="0.5 0.5 0.5" visible="false" 
-                      animation="property: position; from: 0 1 0; to: 0 1.2 0; dir: alternate; dur: 2000; easing: easeInOutSine; loop: true;">
+        <a-gltf-model id="ar-model-3" src="#model3" position="0 0.1 0" scale="0.5 0.5 0.5" visible="false" 
+                      animation="property: position; from: 0 0.1 0; to: 0 0.2 0; dir: alternate; dur: 2000; easing: easeInOutSine; loop: true;">
         </a-gltf-model>
-        <a-gltf-model id="ar-model-4" src="#model5" position="0 1 0" scale="0.5 0.5 0.5" visible="false" 
-                      animation="property: position; from: 0 1 0; to: 0 1.2 0; dir: alternate; dur: 2000; easing: easeInOutSine; loop: true;">
+        <a-gltf-model id="ar-model-4" src="#model4" position="0 0.1 0" scale="0.5 0.5 0.5" visible="false" 
+                      animation="property: position; from: 0 0.1 0; to: 0 0.2 0; dir: alternate; dur: 2000; easing: easeInOutSine; loop: true;">
+        </a-gltf-model>
+        <!-- Dynamic models 5-10 added for when files are uploaded -->
+        <a-gltf-model id="ar-model-5" src="#model5" position="0 0.1 0" scale="0.5 0.5 0.5" visible="false" 
+                      animation="property: position; from: 0 0.1 0; to: 0 0.2 0; dir: alternate; dur: 2000; easing: easeInOutSine; loop: true;">
+        </a-gltf-model>
+        <a-gltf-model id="ar-model-6" src="#model6" position="0 0.1 0" scale="0.5 0.5 0.5" visible="false" 
+                      animation="property: position; from: 0 0.1 0; to: 0 0.2 0; dir: alternate; dur: 2000; easing: easeInOutSine; loop: true;">
+        </a-gltf-model>
+        <a-gltf-model id="ar-model-7" src="#model7" position="0 0.1 0" scale="0.5 0.5 0.5" visible="false" 
+                      animation="property: position; from: 0 0.1 0; to: 0 0.2 0; dir: alternate; dur: 2000; easing: easeInOutSine; loop: true;">
+        </a-gltf-model>
+        <a-gltf-model id="ar-model-8" src="#model8" position="0 0.1 0" scale="0.5 0.5 0.5" visible="false" 
+                      animation="property: position; from: 0 0.1 0; to: 0 0.2 0; dir: alternate; dur: 2000; easing: easeInOutSine; loop: true;">
+        </a-gltf-model>
+        <a-gltf-model id="ar-model-9" src="#model9" position="0 0.1 0" scale="0.5 0.5 0.5" visible="false" 
+                      animation="property: position; from: 0 0.1 0; to: 0 0.2 0; dir: alternate; dur: 2000; easing: easeInOutSine; loop: true;">
+        </a-gltf-model>
+        <a-gltf-model id="ar-model-10" src="#model10" position="0 0.1 0" scale="0.5 0.5 0.5" visible="false" 
+                      animation="property: position; from: 0 0.1 0; to: 0 0.2 0; dir: alternate; dur: 2000; easing: easeInOutSine; loop: true;">
         </a-gltf-model>
       </a-marker>
       

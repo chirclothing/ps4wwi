@@ -460,12 +460,16 @@ const btnStart = document.getElementById('btn-start');
 
 function addControl(btn, action) {
   if (!btn) return;
-  // Use pointerdown to handle both mouse and touch consistently
-  btn.addEventListener('pointerdown', (e) => { 
+  
+  const trigger = (e) => {
     e.preventDefault(); 
     if(!gameOver) action(); 
-    draw(); 
-  });
+    draw();
+  };
+  
+  // Use touchstart and mousedown for instant mobile responsiveness
+  btn.addEventListener('touchstart', trigger, { passive: false });
+  btn.addEventListener('mousedown', trigger);
 }
 
 addControl(btnUp, () => playerRotate(1));
@@ -473,14 +477,19 @@ addControl(btnDown, () => playerDrop());
 addControl(btnLeft, () => playerMove(-1));
 addControl(btnRight, () => playerMove(1));
 
-btnA.addEventListener('pointerdown', (e) => {
+const btnATrigger = (e) => {
     e.preventDefault();
     if(gameOver) resetGame();
-});
-btnStart.addEventListener('pointerdown', (e) => {
+};
+btnA.addEventListener('touchstart', btnATrigger, { passive: false });
+btnA.addEventListener('mousedown', btnATrigger);
+
+const btnStartTrigger = (e) => {
     e.preventDefault();
     if(gameOver) resetGame();
-});
+};
+btnStart.addEventListener('touchstart', btnStartTrigger, { passive: false });
+btnStart.addEventListener('mousedown', btnStartTrigger);
 
 // Keyboard controls
 window.addEventListener('keydown', (e) => {

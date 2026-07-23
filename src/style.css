@@ -4,16 +4,17 @@
   --bg-darker: #020617;
   --text-main: #f8fafc;
   --text-muted: #94a3b8;
-  --accent: #3b82f6;
-  --accent-hover: #60a5fa;
+  --accent: #00f0ff; /* Neon cyan */
+  --accent-hover: #00c3ff;
+  --accent-glow: rgba(0, 240, 255, 0.4);
   
-  /* GameBoy Colors */
-  --gb-body: #e0e0d4;
-  --gb-bezel: #5c5c64;
+  /* Modern GameBoy Colors */
+  --gb-body: #1e1e24; /* Matte dark */
+  --gb-bezel: #0a0a0c;
   --gb-screen-bg: #8bac0f;
   --gb-dark-green: #0f380f;
-  --gb-dpad: #202020;
-  --gb-action: #a01c4c;
+  --gb-dpad: #2c2c35;
+  --gb-action: #ff0055; /* Neon magenta */
 }
 
 * {
@@ -27,6 +28,16 @@ body {
   margin: 0;
   overflow: hidden; /* Hide scrollbars for AR */
   background: #000; /* Fallback before camera loads */
+}
+
+/* Force AR.js canvas and video to cover mobile viewport */
+video, canvas.a-canvas {
+  object-fit: cover !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
 }
 
 /* UI Overlay Layer */
@@ -54,36 +65,37 @@ body {
   text-align: center;
   max-width: 600px;
   width: 90%;
-  background: rgba(15, 23, 42, 0.85);
+  background: rgba(10, 15, 30, 0.6);
   padding: 1.5rem;
-  border-radius: 24px;
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  backdrop-filter: blur(12px);
-  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5), inset 0 0 15px rgba(0, 240, 255, 0.1);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
   transition: opacity 0.3s ease;
 }
 
 .panel-title {
-  font-size: 1.8rem;
-  font-weight: 800;
+  font-family: 'Fira Code', monospace;
+  font-size: 1.6rem;
+  font-weight: 600;
   margin-bottom: 0.5rem;
-  background: linear-gradient(135deg, #fff, #94a3b8);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  color: #fff; /* fallback */
+  color: var(--accent);
+  text-shadow: 0 0 10px var(--accent-glow);
   animation: fadeInDown 0.4s ease-out forwards;
 }
 
 .panel-released {
+  font-family: 'Fira Code', monospace;
   font-size: 0.85rem;
-  font-weight: 600;
-  background: rgba(59, 130, 246, 0.2);
-  color: #60a5fa;
+  font-weight: 400;
+  background: rgba(0, 240, 255, 0.1);
+  color: var(--accent);
   padding: 4px 12px;
-  border-radius: 12px;
+  border-radius: 4px;
   margin-bottom: 1rem;
   display: inline-block;
-  border: 1px solid rgba(59, 130, 246, 0.3);
+  border: 1px solid rgba(0, 240, 255, 0.3);
   animation: fadeIn 0.5s ease-out forwards;
 }
 
@@ -108,10 +120,11 @@ body {
 }
 
 #features-panel h3 {
-  font-size: 1rem;
+  font-family: 'Fira Code', monospace;
+  font-size: 0.9rem;
   color: var(--text-muted);
   text-transform: uppercase;
-  letter-spacing: 1px;
+  letter-spacing: 2px;
   margin-bottom: 0.75rem;
 }
 
@@ -170,11 +183,13 @@ body {
   display: flex;
   align-items: center;
   gap: 1.5rem;
-  background: rgba(15, 23, 42, 0.9);
+  background: rgba(10, 15, 30, 0.6);
   padding: 0.75rem 1.5rem;
   border-radius: 9999px;
-  backdrop-filter: blur(8px);
-  border: 1px solid rgba(255,255,255,0.2);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4), inset 0 0 10px rgba(0, 240, 255, 0.05);
 }
 
 .nav-button {
@@ -185,16 +200,19 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 40px;
-  height: 40px;
+  width: 44px;
+  height: 44px;
   border-radius: 50%;
   transition: all 0.2s;
-  background: rgba(255,255,255,0.1);
+  background: rgba(255,255,255,0.05);
+  border: 1px solid transparent;
 }
 
 .nav-button:hover:not(:disabled) {
-  background: var(--accent);
-  color: white;
+  background: rgba(0, 240, 255, 0.1);
+  border-color: var(--accent);
+  color: var(--accent);
+  box-shadow: 0 0 15px var(--accent-glow);
   transform: scale(1.1);
 }
 
@@ -235,54 +253,39 @@ body {
   justify-content: center;
   align-items: center;
   width: 100%;
-  /* No solid background so gutters are transparent */
 }
 
 .gameboy-body {
-  width: 350px;
-  height: 580px;
+  width: min(90vw, 400px);
+  height: min(85vh, 600px);
   background-color: var(--gb-body);
-  border-radius: 10px 10px 50px 10px;
+  border-radius: 12px;
   padding: 20px;
-  box-shadow: 
-    inset -5px -5px 15px rgba(0,0,0,0.1),
-    inset 5px 5px 15px rgba(255,255,255,0.5),
-    10px 10px 30px rgba(0,0,0,0.8);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8), inset 0 0 0 1px rgba(255, 255, 255, 0.1);
   display: flex;
   flex-direction: column;
   position: relative;
-  font-family: 'Inter', sans-serif;
-  transform: scale(0.9);
-}
-
-/* Top indent lines */
-.gameboy-body::before {
-  content: '';
-  position: absolute;
-  top: 0; left: 20px; right: 20px; height: 10px;
-  border-bottom: 2px solid rgba(0,0,0,0.1);
-  border-top: 2px solid rgba(0,0,0,0.1);
+  font-family: 'Fira Code', monospace;
 }
 
 .gameboy-screen-bezel {
   background-color: var(--gb-bezel);
-  border-radius: 10px 10px 40px 10px;
-  padding: 20px 40px 30px 40px;
-  margin-top: 15px;
+  border-radius: 8px;
+  padding: 20px;
+  margin-top: 10px;
   position: relative;
-  box-shadow: inset 2px 2px 5px rgba(0,0,0,0.5);
+  box-shadow: inset 0 0 10px rgba(0,0,0,0.8);
+  border: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 .screen-header {
   display: flex;
   align-items: center;
-  color: #b0b0b0;
-  font-size: 0.6rem;
-  letter-spacing: 1px;
-  margin-bottom: 5px;
-  position: absolute;
-  top: 20px;
-  left: 10px;
+  color: var(--text-muted);
+  font-size: 0.65rem;
+  letter-spacing: 2px;
+  margin-bottom: 10px;
+  text-transform: uppercase;
 }
 
 .power-light {
@@ -298,18 +301,16 @@ body {
   background-color: var(--gb-screen-bg);
   width: 100%;
   aspect-ratio: 160 / 144;
-  border: 4px solid #000;
-  border-radius: 2px;
-  box-shadow: inset 2px 2px 10px rgba(0,0,0,0.3);
-  image-rendering: pixelated; /* Crisp pixels */
-  margin-top: 25px;
+  border-radius: 4px;
+  box-shadow: 0 0 15px rgba(0,0,0,0.5);
+  image-rendering: pixelated;
 }
 
 .gameboy-controls {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-top: 40px;
+  margin-top: 30px;
   padding: 0 10px;
 }
 
@@ -360,15 +361,15 @@ body {
 
 .dpad-button {
   position: absolute;
-  width: 30px; height: 30px;
+  width: 44px; height: 44px;
   cursor: pointer;
   z-index: 10;
 }
 
-.dpad-button.up { top: 0; left: 30px; }
-.dpad-button.down { bottom: 0; left: 30px; }
-.dpad-button.left { top: 30px; left: 0; }
-.dpad-button.right { top: 30px; right: 0; }
+.dpad-button.up { top: -7px; left: 23px; }
+.dpad-button.down { bottom: -7px; left: 23px; }
+.dpad-button.left { top: 23px; left: -7px; }
+.dpad-button.right { top: 23px; right: -7px; }
 
 .dpad-button:active ~ .dpad-vertical {
   box-shadow: inset 2px 2px 5px rgba(0,0,0,0.6);
@@ -392,16 +393,14 @@ body {
 }
 
 .action-btn {
-  width: 45px;
-  height: 45px;
+  width: 44px;
+  height: 44px;
   border-radius: 50%;
   background-color: var(--gb-action);
   border: none;
-  box-shadow: 
-    inset -2px -2px 5px rgba(0,0,0,0.4),
-    inset 2px 2px 5px rgba(255,255,255,0.4),
-    2px 2px 5px rgba(0,0,0,0.5);
+  box-shadow: 0 4px 10px rgba(255, 0, 85, 0.4);
   cursor: pointer;
+  transition: all 0.1s;
 }
 .action-btn:active {
   box-shadow: inset 2px 2px 8px rgba(0,0,0,0.6);
@@ -409,9 +408,9 @@ body {
 }
 
 .action-button-group .label {
-  color: #333;
-  font-weight: 800;
-  font-size: 0.9rem;
+  color: var(--text-muted);
+  font-weight: 600;
+  font-size: 0.8rem;
   letter-spacing: 1px;
 }
 
@@ -432,49 +431,38 @@ body {
 .sys-btn {
   width: 50px;
   height: 12px;
-  background-color: #888;
-  border-radius: 10px;
-  transform: rotate(-25deg);
-  box-shadow: 
-    inset -1px -1px 3px rgba(0,0,0,0.4),
-    inset 1px 1px 3px rgba(255,255,255,0.4),
-    1px 1px 3px rgba(0,0,0,0.5);
+  background-color: #444;
+  border-radius: 6px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.5);
   cursor: pointer;
+  position: relative;
+}
+/* Invisible touch target wrapper for system buttons to ensure 44px */
+.sys-btn::before {
+  content: '';
+  position: absolute;
+  top: -16px; bottom: -16px; left: -10px; right: -10px;
 }
 .sys-btn:active {
-  box-shadow: inset 1px 1px 5px rgba(0,0,0,0.6);
-  transform: rotate(-25deg) translateY(2px);
+  box-shadow: inset 0 2px 5px rgba(0,0,0,0.8);
+  transform: translateY(2px);
 }
 
 .sys-btn-group .label {
-  color: #333;
+  color: var(--text-muted);
   font-size: 0.6rem;
-  font-weight: 800;
+  font-weight: 600;
   letter-spacing: 1px;
   margin-top: 5px;
 }
 
 .speaker-grill {
-  position: absolute;
-  bottom: 30px;
-  right: 30px;
-  display: flex;
-  gap: 8px;
-  transform: rotate(-25deg);
-}
-
-.speaker-grill div {
-  width: 6px;
-  height: 50px;
-  background-color: rgba(0,0,0,0.2);
-  border-radius: 3px;
-  box-shadow: inset 1px 1px 2px rgba(0,0,0,0.4);
+  display: none; /* Hide speaker grill for a cleaner modern look */
 }
 
 /* Responsive adjustments */
 @media (max-width: 768px) {
-  .panel-title { font-size: 1.5rem; }
+  .panel-title { font-size: 1.3rem; }
   .panel-desc { font-size: 0.9rem; }
-  .gameboy-body { transform: scale(0.75); margin-top: 0px; }
   #info-panel { padding: 1rem; }
 }

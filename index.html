@@ -2,10 +2,10 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
     <title>Controller Evolution | WebAR (AR.js)</title>
     <title>Controller Evolution</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/src/style.css" />
 
 <!-- A-Frame and AR.js -->
@@ -125,7 +125,9 @@
 embedded 
 arjs="sourceType: webcam; debugUIEnabled: false;" 
 renderer="logarithmicDepthBuffer: true; colorManagement: true;" 
-vr-mode-ui="enabled: false">
+vr-mode-ui="enabled: false"
+device-orientation-permission-ui="enabled: false"
+loading-screen="enabled: false">
 
 <a-assets timeout="10000">
 <a-asset-item id="model0" src="models/atari-2600.glb" crossorigin="anonymous"></a-asset-item>

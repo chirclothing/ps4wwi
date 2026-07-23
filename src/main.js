@@ -76,18 +76,7 @@ const phaseData = [
     ]
   },
   {
-    title: "6. PlayStation DualShock",
-    released: "1997",
-    history: "Sony revolutionized gaming by adding dual analog sticks and vibration, creating the foundation of modern PlayStation controllers.",
-    features: [
-      "Dual analog sticks",
-      "Vibration feedback",
-      "Analog mode button",
-      "Improved comfort"
-    ]
-  },
-  {
-    title: "7. Xbox Controller",
+    title: "6. Xbox Controller",
     released: "2001",
     history: "Microsoft's first controller focused on comfort and introduced analog triggers, marking Xbox's entry into the console market.",
     features: [
@@ -98,18 +87,7 @@ const phaseData = [
     ]
   },
   {
-    title: "8. Xbox 360 Controller",
-    released: "2005",
-    history: "The Xbox 360 controller refined the original design with wireless connectivity and became one of the most popular controllers ever made.",
-    features: [
-      "Wireless connectivity",
-      "Comfortable grip",
-      "Precision analog sticks",
-      "Improved triggers"
-    ]
-  },
-  {
-    title: "9. PlayStation 3 DualShock 3",
+    title: "7. PlayStation 3 DualShock 3",
     released: "2006",
     history: "The DualShock 3 introduced wireless gameplay, motion sensing, and vibration while keeping the familiar PlayStation layout.",
     features: [
@@ -120,7 +98,7 @@ const phaseData = [
     ]
   },
   {
-    title: "10. Xbox One Controller",
+    title: "8. Xbox One Controller",
     released: "2013",
     history: "Microsoft redesigned the Xbox controller with better comfort, improved precision, and immersive trigger vibrations.",
     features: [
@@ -131,7 +109,7 @@ const phaseData = [
     ]
   },
   {
-    title: "11. PlayStation 4 DualShock 4",
+    title: "9. PlayStation 4 DualShock 4",
     released: "2013",
     history: "The DualShock 4 transformed the controller into an interactive device by adding touch controls, social sharing, and immersive features.",
     features: [
@@ -145,14 +123,14 @@ const phaseData = [
     ]
   },
   {
-    title: "12. Retro Play",
+    title: "10. Retro Play",
     released: "",
     history: "",
     features: []
   }
 ];
 
-const numPhases = 12;
+const numPhases = 10;
 let currentPhaseIndex = 0;
 
 // Wait for DOM to load
@@ -183,7 +161,7 @@ function updateNav() {
   });
   
   // Update UI & AR models
-  if (currentPhaseIndex < 11) {
+  if (currentPhaseIndex < 9) {
     // Show Info Panel, hide GameBoy
     infoPanel.style.display = 'flex';
     document.getElementById('features-panel').style.display = 'flex';
@@ -203,8 +181,8 @@ function updateNav() {
       phaseFeatures.appendChild(li);
     });
     
-    // Update AR Models (only 11 models total for index 0 to 10)
-    for (let i = 0; i < 11; i++) {
+    // Update AR Models (only 9 models total for index 0 to 8)
+    for (let i = 0; i < 9; i++) {
       const model = document.getElementById(`ar-model-${i}`);
       if (model) {
         model.setAttribute('visible', i === currentPhaseIndex);
@@ -217,7 +195,7 @@ function updateNav() {
     gameboyPanel.style.display = 'flex';
     
     // Hide all AR Models
-    for (let i = 0; i < 11; i++) {
+    for (let i = 0; i < 9; i++) {
       const model = document.getElementById(`ar-model-${i}`);
       if (model) {
         model.setAttribute('visible', false);
@@ -231,7 +209,7 @@ function goToPhase(index) {
   updateNav();
   
   // Start or stop Tetris game loop
-  if (index === 11) {
+  if (index === 9) {
      if (gameOver) resetGame();
      lastTime = performance.now();
      if (!animationId) animationId = requestAnimationFrame(update);
@@ -431,7 +409,7 @@ function playerRotate(dir) {
 }
 
 function update(time = 0) {
-  if (currentPhaseIndex !== 11) {
+  if (currentPhaseIndex !== 9) {
      animationId = null;
      return;
   }
@@ -493,7 +471,7 @@ btnStart.addEventListener('mousedown', btnStartTrigger);
 
 // Keyboard controls
 window.addEventListener('keydown', (e) => {
-  if (currentPhaseIndex !== 11) return;
+  if (currentPhaseIndex !== 9) return;
   
   switch(e.key) {
     case 'ArrowUp': 

@@ -113,8 +113,10 @@ loading-screen="enabled: false">
 <a-asset-item id="model2" src="models/snes-controller.glb" crossorigin="anonymous"></a-asset-item>
 <a-asset-item id="model3" src="models/ps1-controller.glb" crossorigin="anonymous"></a-asset-item>
 <a-asset-item id="model4" src="models/n64-controller.glb" crossorigin="anonymous"></a-asset-item>
-<!-- Missing models 5-9 removed to prevent 404 loading timeouts -->
-<a-asset-item id="model10" src="models/ps4-dualshock.glb" crossorigin="anonymous"></a-asset-item>
+<a-asset-item id="model5" src="models/xbox-original.glb" crossorigin="anonymous"></a-asset-item>
+<a-asset-item id="model6" src="models/ps3-dualshock.glb" crossorigin="anonymous"></a-asset-item>
+<a-asset-item id="model7" src="models/xbox-one.glb" crossorigin="anonymous"></a-asset-item>
+<a-asset-item id="model8" src="models/ps4-dualshock.glb" crossorigin="anonymous"></a-asset-item>
 </a-assets>
 
 <a-marker type="pattern" url="patt.hiro">
@@ -123,40 +125,15 @@ loading-screen="enabled: false">
 <a-light type="directional" color="#FFF" intensity="0.8" position="0 1 1"></a-light>
 
 <!-- Models hovering slightly above the marker -->
-<a-gltf-model id="ar-model-0" src="#model0" position="0 0.1 0" scale="0.5 0.5 0.5" visible="true" 
-animation="property: position; from: 0 0.1 0; to: 0 0.2 0; dir: alternate; dur: 2000; easing: easeInOutSine; loop: true;">
-</a-gltf-model>
-<a-gltf-model id="ar-model-1" src="#model1" position="0 0.1 0" scale="0.5 0.5 0.5" visible="false" 
-animation="property: position; from: 0 0.1 0; to: 0 0.2 0; dir: alternate; dur: 2000; easing: easeInOutSine; loop: true;">
-</a-gltf-model>
-<a-gltf-model id="ar-model-2" src="#model2" position="0 0.1 0" scale="0.5 0.5 0.5" visible="false" 
-animation="property: position; from: 0 0.1 0; to: 0 0.2 0; dir: alternate; dur: 2000; easing: easeInOutSine; loop: true;">
-</a-gltf-model>
-<a-gltf-model id="ar-model-3" src="#model3" position="0 0.1 0" scale="0.5 0.5 0.5" visible="false" 
-animation="property: position; from: 0 0.1 0; to: 0 0.2 0; dir: alternate; dur: 2000; easing: easeInOutSine; loop: true;">
-</a-gltf-model>
-<a-gltf-model id="ar-model-4" src="#model4" position="0 0.1 0" scale="0.5 0.5 0.5" visible="false" 
-animation="property: position; from: 0 0.1 0; to: 0 0.2 0; dir: alternate; dur: 2000; easing: easeInOutSine; loop: true;">
-</a-gltf-model>
-<!-- Dynamic models 5-10 added for when files are uploaded -->
-<a-gltf-model id="ar-model-5" src="#model5" position="0 0.1 0" scale="0.5 0.5 0.5" visible="false" 
-animation="property: position; from: 0 0.1 0; to: 0 0.2 0; dir: alternate; dur: 2000; easing: easeInOutSine; loop: true;">
-</a-gltf-model>
-<a-gltf-model id="ar-model-6" src="#model6" position="0 0.1 0" scale="0.5 0.5 0.5" visible="false" 
-animation="property: position; from: 0 0.1 0; to: 0 0.2 0; dir: alternate; dur: 2000; easing: easeInOutSine; loop: true;">
-</a-gltf-model>
-<a-gltf-model id="ar-model-7" src="#model7" position="0 0.1 0" scale="0.5 0.5 0.5" visible="false" 
-animation="property: position; from: 0 0.1 0; to: 0 0.2 0; dir: alternate; dur: 2000; easing: easeInOutSine; loop: true;">
-</a-gltf-model>
-<a-gltf-model id="ar-model-8" src="#model8" position="0 0.1 0" scale="0.5 0.5 0.5" visible="false" 
-animation="property: position; from: 0 0.1 0; to: 0 0.2 0; dir: alternate; dur: 2000; easing: easeInOutSine; loop: true;">
-</a-gltf-model>
-<a-gltf-model id="ar-model-9" src="#model9" position="0 0.1 0" scale="0.5 0.5 0.5" visible="false" 
-animation="property: position; from: 0 0.1 0; to: 0 0.2 0; dir: alternate; dur: 2000; easing: easeInOutSine; loop: true;">
-</a-gltf-model>
-<a-gltf-model id="ar-model-10" src="#model10" position="0 0.1 0" scale="0.5 0.5 0.5" visible="false" 
-animation="property: position; from: 0 0.1 0; to: 0 0.2 0; dir: alternate; dur: 2000; easing: easeInOutSine; loop: true;">
-</a-gltf-model>
+<a-gltf-model id="ar-model-0" src="#model0" position="0 0.1 0" scale="0.5 0.5 0.5" visible="true" animation="property: position; from: 0 0.1 0; to: 0 0.2 0; dir: alternate; dur: 2000; easing: easeInOutSine; loop: true;"></a-gltf-model>
+<a-gltf-model id="ar-model-1" src="#model1" position="0 0.1 0" scale="0.5 0.5 0.5" visible="false" animation="property: position; from: 0 0.1 0; to: 0 0.2 0; dir: alternate; dur: 2000; easing: easeInOutSine; loop: true;"></a-gltf-model>
+<a-gltf-model id="ar-model-2" src="#model2" position="0 0.1 0" scale="0.5 0.5 0.5" visible="false" animation="property: position; from: 0 0.1 0; to: 0 0.2 0; dir: alternate; dur: 2000; easing: easeInOutSine; loop: true;"></a-gltf-model>
+<a-gltf-model id="ar-model-3" src="#model3" position="0 0.1 0" scale="0.5 0.5 0.5" visible="false" animation="property: position; from: 0 0.1 0; to: 0 0.2 0; dir: alternate; dur: 2000; easing: easeInOutSine; loop: true;"></a-gltf-model>
+<a-gltf-model id="ar-model-4" src="#model4" position="0 0.1 0" scale="0.5 0.5 0.5" visible="false" animation="property: position; from: 0 0.1 0; to: 0 0.2 0; dir: alternate; dur: 2000; easing: easeInOutSine; loop: true;"></a-gltf-model>
+<a-gltf-model id="ar-model-5" src="#model5" position="0 0.1 0" scale="0.5 0.5 0.5" visible="false" animation="property: position; from: 0 0.1 0; to: 0 0.2 0; dir: alternate; dur: 2000; easing: easeInOutSine; loop: true;"></a-gltf-model>
+<a-gltf-model id="ar-model-6" src="#model6" position="0 0.1 0" scale="0.5 0.5 0.5" visible="false" animation="property: position; from: 0 0.1 0; to: 0 0.2 0; dir: alternate; dur: 2000; easing: easeInOutSine; loop: true;"></a-gltf-model>
+<a-gltf-model id="ar-model-7" src="#model7" position="0 0.1 0" scale="0.5 0.5 0.5" visible="false" animation="property: position; from: 0 0.1 0; to: 0 0.2 0; dir: alternate; dur: 2000; easing: easeInOutSine; loop: true;"></a-gltf-model>
+<a-gltf-model id="ar-model-8" src="#model8" position="0 0.1 0" scale="0.5 0.5 0.5" visible="false" animation="property: position; from: 0 0.1 0; to: 0 0.2 0; dir: alternate; dur: 2000; easing: easeInOutSine; loop: true;"></a-gltf-model>
 </a-marker>
 
 <a-entity camera></a-entity>

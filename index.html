@@ -123,11 +123,11 @@
 <!-- WebAR Scene Layer -->
 <a-scene 
 embedded 
-arjs="sourceType: webcam; debugUIEnabled: false; cameraParametersUrl: camera_para.dat;" 
+arjs="sourceType: webcam; debugUIEnabled: false;" 
 renderer="logarithmicDepthBuffer: true; colorManagement: true;" 
 vr-mode-ui="enabled: false">
 
-<a-assets>
+<a-assets timeout="60000">
 <a-asset-item id="model0" src="models/atari-2600.glb" crossorigin="anonymous"></a-asset-item>
 <a-asset-item id="model1" src="models/nes-controller.glb" crossorigin="anonymous"></a-asset-item>
 <a-asset-item id="model2" src="models/snes-controller.glb" crossorigin="anonymous"></a-asset-item>

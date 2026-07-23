@@ -76,7 +76,18 @@ const phaseData = [
     ]
   },
   {
-    title: "6. Xbox Controller",
+    title: "6. PlayStation DualShock",
+    released: "1997",
+    history: "Sony revolutionized gaming by adding dual analog sticks and vibration, creating the foundation of modern PlayStation controllers.",
+    features: [
+      "Dual analog sticks",
+      "Vibration feedback",
+      "Analog mode button",
+      "Improved comfort"
+    ]
+  },
+  {
+    title: "7. Xbox Controller",
     released: "2001",
     history: "Microsoft's first controller focused on comfort and introduced analog triggers, marking Xbox's entry into the console market.",
     features: [
@@ -84,17 +95,6 @@ const phaseData = [
       "Offset analog sticks",
       "Analog triggers",
       "Six action buttons"
-    ]
-  },
-  {
-    title: "7. PlayStation 3 DualShock 3",
-    released: "2006",
-    history: "The DualShock 3 introduced wireless gameplay, motion sensing, and vibration while keeping the familiar PlayStation layout.",
-    features: [
-      "Wireless Bluetooth",
-      "Motion sensing",
-      "Vibration feedback",
-      "Rechargeable battery"
     ]
   },
   {

@@ -13,29 +13,7 @@
 <script src="https://raw.githack.com/AR-js-org/AR.js/3.3.3/aframe/build/aframe-ar.js"></script>
 </head>
 <body style="margin: 0; overflow: hidden; background-color: transparent;">
-    <div id="debug-overlay" style="position: fixed; top: 0; left: 0; width: 100vw; height: 30vh; background: rgba(0,0,0,0.7); color: lime; font-family: monospace; font-size: 12px; z-index: 9999; overflow-y: auto; pointer-events: none;"></div>
-    <script>
-      (function(){
-        var overlay = document.getElementById('debug-overlay');
-        function print(msg, color) {
-          var d = document.createElement('div');
-          d.style.color = color;
-          d.style.padding = '2px 5px';
-          d.style.borderBottom = '1px solid #333';
-          d.textContent = msg;
-          overlay.appendChild(d);
-          overlay.scrollTop = overlay.scrollHeight;
-        }
-        var oldLog = console.log;
-        var oldErr = console.error;
-        var oldWarn = console.warn;
-        console.log = function() { print(Array.from(arguments).join(' '), 'lime'); oldLog.apply(console, arguments); };
-        console.warn = function() { print(Array.from(arguments).join(' '), 'yellow'); oldWarn.apply(console, arguments); };
-        console.error = function() { print(Array.from(arguments).join(' '), 'red'); oldErr.apply(console, arguments); };
-        window.addEventListener('error', function(e) { console.error(e.message, e.filename, e.lineno); });
-        window.addEventListener('unhandledrejection', function(e) { console.error('Unhandled Rejection:', e.reason); });
-      })();
-    </script>
+
 <!-- UI Overlay Layer -->
 <div id="ui-layer">
 <!-- Info Panel for Phases 0-10 -->

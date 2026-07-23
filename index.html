@@ -19,12 +19,6 @@
         <h1 id="phase-title" class="panel-title">Controller Name</h1>
         <div id="phase-released" class="panel-released">Released: 19XX</div>
         <p id="phase-history" class="panel-desc">History goes here...</p>
-        <div class="features-section">
-          <h3>Unique Features</h3>
-          <ul id="phase-features" class="features-list">
-            <!-- Populated via JS -->
-          </ul>
-        </div>
       </div>
 
       <!-- GameBoy Panel for Phase 11 -->
@@ -77,7 +71,17 @@
         </div>
       </div>
 
-      <!-- Navigation UI -->
+      <!-- Bottom UI -->
+      <div id="bottom-ui" style="display: flex; flex-direction: column; align-items: center; width: 100%;">
+        <!-- Features Panel -->
+        <div id="features-panel" class="features-section">
+          <h3>Unique Features</h3>
+          <ul id="phase-features" class="features-list">
+            <!-- Populated via JS -->
+          </ul>
+        </div>
+
+        <!-- Navigation UI -->
       <nav class="carousel-nav">
         <button id="nav-prev" class="nav-button" aria-label="Previous Panel">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
@@ -89,12 +93,13 @@
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
         </button>
       </nav>
+      </div>
     </div>
 
     <!-- WebAR Scene Layer -->
     <a-scene 
       embedded 
-      arjs="sourceType: webcam; debugUIEnabled: false; cameraParametersUrl: camera_para.dat;" 
+      arjs="sourceType: webcam; debugUIEnabled: false;" 
       renderer="logarithmicDepthBuffer: true; colorManagement: true;" 
       vr-mode-ui="enabled: false">
       

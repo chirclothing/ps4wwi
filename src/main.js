@@ -178,6 +178,7 @@ function updateNav() {
   if (currentPhaseIndex < 11) {
     // Show Info Panel, hide GameBoy
     infoPanel.style.display = 'flex';
+    document.getElementById('features-panel').style.display = 'flex';
     gameboyPanel.style.display = 'none';
     
     // Update text
@@ -204,6 +205,7 @@ function updateNav() {
   } else {
     // Show GameBoy, hide Info Panel
     infoPanel.style.display = 'none';
+    document.getElementById('features-panel').style.display = 'none';
     gameboyPanel.style.display = 'flex';
     
     // Hide all AR Models

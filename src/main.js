@@ -1,5 +1,13 @@
 import './style.css'
 
+// Diagnostics for camera access in secure contexts
+if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+  console.error("CRITICAL: Camera API (getUserMedia) is NOT available. This usually happens on HTTP or restricted environments (like some in-app browsers). Ensure you are using HTTPS.");
+  setTimeout(() => alert("Camera access is disabled by your browser. Please ensure you are on a secure (HTTPS) connection!"), 1000);
+} else {
+  console.log("SUCCESS: Camera API is available in this context.");
+}
+
 // 1. App State & Navigation Logic
 const prevBtn = document.getElementById('nav-prev');
 const nextBtn = document.getElementById('nav-next');

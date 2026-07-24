@@ -106,10 +106,7 @@ const phaseData = [
       "Multi-touch touchpad",
       "Share button",
       "Light bar",
-      "Built-in speaker",
-      "3.5 mm headphone jack",
-      "Improved analog sticks and triggers",
-      "Motion sensors"
+      "Built-in speaker"
     ]
   },
   {

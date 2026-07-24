@@ -86,19 +86,9 @@ const phaseData = [
       "Improved comfort"
     ]
   },
+
   {
-    title: "7. Xbox Controller",
-    released: "2001",
-    history: "Microsoft's first controller focused on comfort and introduced analog triggers, marking Xbox's entry into the console market.",
-    features: [
-      "Ergonomic design",
-      "Offset analog sticks",
-      "Analog triggers",
-      "Six action buttons"
-    ]
-  },
-  {
-    title: "8. Xbox One Controller",
+    title: "7. Xbox One Controller",
     released: "2013",
     history: "Microsoft redesigned the Xbox controller with better comfort, improved precision, and immersive trigger vibrations.",
     features: [
@@ -109,7 +99,7 @@ const phaseData = [
     ]
   },
   {
-    title: "9. PlayStation 4 DualShock 4",
+    title: "8. PlayStation 4 DualShock 4",
     released: "2013",
     history: "The DualShock 4 transformed the controller into an interactive device by adding touch controls, social sharing, and immersive features.",
     features: [
@@ -123,14 +113,14 @@ const phaseData = [
     ]
   },
   {
-    title: "10. Retro Play",
+    title: "9. Retro Play",
     released: "",
     history: "",
     features: []
   }
 ];
 
-const numPhases = 10;
+const numPhases = 9;
 let currentPhaseIndex = 0;
 
 // Wait for DOM to load
@@ -161,7 +151,7 @@ function updateNav() {
   });
   
   // Update UI & AR models
-  if (currentPhaseIndex < 9) {
+  if (currentPhaseIndex < 8) {
     // Show Info Panel, hide GameBoy
     infoPanel.style.display = 'flex';
     document.getElementById('features-panel').style.display = 'flex';
@@ -181,8 +171,8 @@ function updateNav() {
       phaseFeatures.appendChild(li);
     });
     
-    // Update AR Models (only 9 models total for index 0 to 8)
-    for (let i = 0; i < 9; i++) {
+    // Update AR Models (only 8 models total for index 0 to 7)
+    for (let i = 0; i < 8; i++) {
       const model = document.getElementById(`ar-model-${i}`);
       if (model) {
         model.setAttribute('visible', i === currentPhaseIndex);
@@ -195,7 +185,7 @@ function updateNav() {
     gameboyPanel.style.display = 'flex';
     
     // Hide all AR Models
-    for (let i = 0; i < 9; i++) {
+    for (let i = 0; i < 8; i++) {
       const model = document.getElementById(`ar-model-${i}`);
       if (model) {
         model.setAttribute('visible', false);
@@ -209,7 +199,7 @@ function goToPhase(index) {
   updateNav();
   
   // Start or stop Tetris game loop
-  if (index === 9) {
+  if (index === 8) {
      if (gameOver) resetGame();
      lastTime = performance.now();
      if (!animationId) animationId = requestAnimationFrame(update);
@@ -409,7 +399,7 @@ function playerRotate(dir) {
 }
 
 function update(time = 0) {
-  if (currentPhaseIndex !== 9) {
+  if (currentPhaseIndex !== 8) {
      animationId = null;
      return;
   }
@@ -471,7 +461,7 @@ btnStart.addEventListener('mousedown', btnStartTrigger);
 
 // Keyboard controls
 window.addEventListener('keydown', (e) => {
-  if (currentPhaseIndex !== 9) return;
+  if (currentPhaseIndex !== 8) return;
   
   switch(e.key) {
     case 'ArrowUp': 
@@ -516,4 +506,79 @@ function resetGame() {
 // Initial initialization
 createPiece();
 draw();
+
+// AR Model Touch Gestures (Rotate & Zoom)
+let touchState = {
+  mode: 'none', // 'rotate' or 'zoom'
+  initialDist: 0,
+  initialScale: 0.5,
+  lastX: 0,
+  lastY: 0,
+  currentRot: {x: 0, y: 0, z: 0}
+};
+
+document.addEventListener('touchstart', (e) => {
+  if (e.target.tagName !== 'CANVAS') return;
+  
+  const currentModel = document.getElementById(`ar-model-${currentPhaseIndex}`);
+  if (!currentModel || currentPhaseIndex >= 8) return; // Ignore if Retro Play phase
+  
+  if (e.touches.length === 1) {
+    touchState.mode = 'rotate';
+    touchState.lastX = e.touches[0].pageX;
+    touchState.lastY = e.touches[0].pageY;
+    const rot = currentModel.getAttribute('rotation') || {x: 0, y: 0, z: 0};
+    touchState.currentRot = { x: rot.x || 0, y: rot.y || 0, z: rot.z || 0 };
+  } else if (e.touches.length === 2) {
+    touchState.mode = 'zoom';
+    const dx = e.touches[0].pageX - e.touches[1].pageX;
+    const dy = e.touches[0].pageY - e.touches[1].pageY;
+    touchState.initialDist = Math.hypot(dx, dy);
+    const scale = currentModel.getAttribute('scale') || {x: 0.5, y: 0.5, z: 0.5};
+    touchState.initialScale = scale.x || 0.5;
+  }
+}, { passive: false });
+
+document.addEventListener('touchmove', (e) => {
+  if (touchState.mode === 'none' || e.target.tagName !== 'CANVAS') return;
+  e.preventDefault(); // Prevent scrolling while interacting with AR
+  
+  const currentModel = document.getElementById(`ar-model-${currentPhaseIndex}`);
+  if (!currentModel) return;
+
+  if (touchState.mode === 'rotate' && e.touches.length === 1) {
+    const deltaX = e.touches[0].pageX - touchState.lastX;
+    const deltaY = e.touches[0].pageY - touchState.lastY;
+    
+    // Rotate model. Dragging horizontally rotates around Y axis.
+    touchState.currentRot.y += deltaX * 0.5;
+    touchState.currentRot.x += deltaY * 0.5;
+    
+    currentModel.setAttribute('rotation', touchState.currentRot);
+    
+    touchState.lastX = e.touches[0].pageX;
+    touchState.lastY = e.touches[0].pageY;
+  } else if (touchState.mode === 'zoom' && e.touches.length === 2) {
+    const dx = e.touches[0].pageX - e.touches[1].pageX;
+    const dy = e.touches[0].pageY - e.touches[1].pageY;
+    const dist = Math.hypot(dx, dy);
+    
+    if (touchState.initialDist > 0) {
+      const scaleFactor = dist / touchState.initialDist;
+      // Limit zoom between 0.1 and 3.0
+      const newScale = Math.max(0.1, Math.min(3.0, touchState.initialScale * scaleFactor)); 
+      currentModel.setAttribute('scale', `${newScale} ${newScale} ${newScale}`);
+    }
+  }
+}, { passive: false });
+
+document.addEventListener('touchend', (e) => {
+  if (e.touches.length === 0) {
+    touchState.mode = 'none';
+  } else if (e.touches.length === 1) {
+    touchState.mode = 'rotate';
+    touchState.lastX = e.touches[0].pageX;
+    touchState.lastY = e.touches[0].pageY;
+  }
+});
 

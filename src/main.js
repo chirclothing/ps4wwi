@@ -131,12 +131,46 @@ document.addEventListener("DOMContentLoaded", () => {
     indicatorsContainer.appendChild(dot);
   }
   
+  // Modals Event Listeners
+  const instructionModal = document.getElementById('instruction-modal');
+  const closeModalBtn = document.getElementById('close-modal-btn');
+  const giftModal = document.getElementById('gift-modal');
+  const giftBtn = document.getElementById('gift-btn');
+  const closeGiftBtn = document.getElementById('close-gift-btn');
+
+  if (closeModalBtn && instructionModal) {
+    closeModalBtn.addEventListener('click', () => {
+      instructionModal.style.opacity = '0';
+      setTimeout(() => {
+        instructionModal.style.display = 'none';
+      }, 300);
+    });
+  }
+
+  if (giftBtn && giftModal) {
+    giftBtn.addEventListener('click', () => {
+      giftModal.style.display = 'flex';
+      giftModal.style.opacity = '1';
+    });
+  }
+
+  if (closeGiftBtn && giftModal) {
+    closeGiftBtn.addEventListener('click', () => {
+      giftModal.style.opacity = '0';
+      setTimeout(() => {
+        giftModal.style.display = 'none';
+      }, 300);
+    });
+  }
+
   // Initialize nav state
   updateNav();
 });
 
 function updateNav() {
   const indicators = document.querySelectorAll('.indicator');
+  const gameboyTitle = document.getElementById('gameboy-title');
+  const giftBtn = document.getElementById('gift-btn');
   
   // Update buttons
   prevBtn.disabled = currentPhaseIndex === 0;
@@ -149,10 +183,12 @@ function updateNav() {
   
   // Update UI & AR models
   if (currentPhaseIndex < 8) {
-    // Show Info Panel, hide GameBoy
+    // Show Info Panel, hide GameBoy elements
     infoPanel.style.display = 'flex';
     document.getElementById('features-panel').style.display = 'flex';
     gameboyPanel.style.display = 'none';
+    if (gameboyTitle) gameboyTitle.style.display = 'none';
+    if (giftBtn) giftBtn.style.display = 'none';
     
     // Update text
     const currentData = phaseData[currentPhaseIndex];
@@ -176,10 +212,12 @@ function updateNav() {
       }
     }
   } else {
-    // Show GameBoy, hide Info Panel
+    // Show GameBoy elements, hide Info Panel
     infoPanel.style.display = 'none';
     document.getElementById('features-panel').style.display = 'none';
     gameboyPanel.style.display = 'flex';
+    if (gameboyTitle) gameboyTitle.style.display = 'block';
+    if (giftBtn) giftBtn.style.display = 'flex';
     
     // Hide all AR Models
     for (let i = 0; i < 8; i++) {

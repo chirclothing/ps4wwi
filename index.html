@@ -14,8 +14,37 @@
 </head>
 <body style="margin: 0; overflow: hidden; background-color: transparent;">
 
+<!-- Instruction Modal (shown at start) -->
+<div id="instruction-modal" class="modal-overlay">
+  <div class="modal-content">
+    <h2>3D Interaction</h2>
+    <p>👆 Swipe with <strong>1 finger</strong> to rotate the controller models.</p>
+    <p>✌️ Pinch with <strong>2 fingers</strong> to zoom in and out.</p>
+    <button id="close-modal-btn">Got it!</button>
+  </div>
+</div>
+
 <!-- UI Overlay Layer -->
 <div id="ui-layer">
+  <!-- Gameboy Title (Shown only in last phase) -->
+  <div id="gameboy-title" class="gameboy-title" style="display: none;">Gameboy Tetris</div>
+
+  <!-- Special Gift Button (Shown only in last phase) -->
+  <button id="gift-btn" style="display: none;" aria-label="Claim Gift">🎁</button>
+
+  <!-- Special Gift Modal (Hidden by default) -->
+  <div id="gift-modal" class="modal-overlay" style="display: none;">
+    <div class="modal-content">
+      <h2>🎁 Special Gift!</h2>
+      <p>Thank you for exploring the Controller Evolution AR Experience.</p>
+      <div class="gift-box-wrapper">
+        <div class="coupon-code">CHIRRETRO15</div>
+        <p class="coupon-desc">Use this code for <strong>15% OFF</strong> at Chir Clothing!</p>
+      </div>
+      <button id="close-gift-btn">Awesome!</button>
+    </div>
+  </div>
+
 <!-- Info Panel for Phases 0-10 -->
 <div id="info-panel" class="panel-content">
 <h1 id="phase-title" class="panel-title">Controller Name</h1>

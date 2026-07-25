@@ -596,7 +596,7 @@ function updateNav() {
     document.getElementById('features-panel').style.display = 'none';
     gameboyPanel.style.display = 'flex';
     if (gameboyTitle) gameboyTitle.style.display = 'block';
-    if (giftBtn) giftBtn.style.display = 'flex';
+    if (giftBtn) giftBtn.style.display = 'none';
     
     // Hide all AR Models
     for (let i = 0; i < 8; i++) {

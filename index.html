@@ -29,13 +29,17 @@
   <!-- Gameboy Title (Shown only in last phase) -->
   <div id="gameboy-title" class="gameboy-title" style="display: none;">Gameboy Tetris</div>
 
-  <!-- Top-Right Action Buttons (Flashlight + Audio Mute/Unmute) -->
-  <div id="top-right-actions" class="top-right-actions">
+  <!-- Top-Left Action Button (Flashlight) -->
+  <div id="top-left-actions" class="top-left-actions">
     <button id="torch-toggle-btn" class="action-icon-btn torch-btn" aria-label="Toggle Flashlight" title="Toggle Flashlight" style="display: none;">🔦</button>
+  </div>
+
+  <!-- Top-Right Action Button (Audio Mute/Unmute) -->
+  <div id="top-right-actions" class="top-right-actions">
     <button id="audio-toggle-btn" class="action-icon-btn audio-btn" aria-label="Toggle Audio" title="Toggle Audio">🔊</button>
   </div>
 
-  <!-- Special Gift Button (Shown only in last phase) -->
+  <!-- Special Gift Button (Hidden) -->
   <button id="gift-btn" style="display: none;" aria-label="Claim Gift">🎁</button>
 
   <!-- Special Gift Modal (Hidden by default) -->
@@ -57,16 +61,18 @@
     <div id="top-fixed-header" class="top-fixed-header">
       <h1 id="phase-title" class="panel-title">Controller Name</h1>
       <div id="phase-released" class="panel-released">Released: 19XX</div>
+      
+      <!-- Toggle button moved here (exactly below title/date) -->
+      <button id="top-drawer-toggle" class="drawer-toggle top-toggle" aria-label="Toggle Description">
+        <span id="top-toggle-text">Controller Info</span>
+        <span id="top-toggle-arrow">▼</span>
+      </button>
     </div>
     
     <!-- Collapsible Description Box -->
     <div id="info-panel" class="drawer-content panel-content">
       <p id="phase-history" class="panel-desc">History goes here...</p>
     </div>
-    <button id="top-drawer-toggle" class="drawer-toggle top-toggle" aria-label="Toggle Description">
-      <span id="top-toggle-text">Controller Info</span>
-      <span id="top-toggle-arrow">▼</span>
-    </button>
   </div>
 
   <!-- GameBoy Panel for Phase 11 -->

@@ -351,6 +351,94 @@ const audioManager = {
   }
 };
 
+// Flashlight (Torch) Manager
+const torchManager = {
+  isTorchOn: false,
+  isSupported: false,
+  track: null,
+
+  init() {
+    const torchBtn = document.getElementById('torch-toggle-btn');
+    if (!torchBtn) return;
+
+    // Check periodically for AR.js video to initialize
+    const checkVideoInterval = setInterval(() => {
+      const video = document.querySelector('video');
+      if (video && video.srcObject) {
+        clearInterval(checkVideoInterval);
+        this.checkSupport(video.srcObject);
+      }
+    }, 500);
+
+    // Stop checking after 15 seconds to prevent endless loop if no video
+    setTimeout(() => clearInterval(checkVideoInterval), 15000);
+  },
+
+  checkSupport(srcObject) {
+    const torchBtn = document.getElementById('torch-toggle-btn');
+    if (!torchBtn || !srcObject) return;
+
+    try {
+      const tracks = srcObject.getVideoTracks();
+      if (!tracks || tracks.length === 0) return;
+      this.track = tracks[0];
+
+      const capabilities = typeof this.track.getCapabilities === 'function' ? this.track.getCapabilities() : {};
+      if (capabilities && capabilities.torch) {
+        this.isSupported = true;
+        torchBtn.style.display = 'flex';
+        torchBtn.classList.remove('inactive');
+      } else if (typeof ImageCapture !== 'undefined') {
+        try {
+          const ic = new ImageCapture(this.track);
+          ic.getPhotoCapabilities().then(caps => {
+            if (caps && (caps.fillLightMode || caps.torch)) {
+              this.isSupported = true;
+              torchBtn.style.display = 'flex';
+              torchBtn.classList.remove('inactive');
+            } else {
+              torchBtn.style.display = 'none';
+            }
+          }).catch(() => {
+            torchBtn.style.display = 'none';
+          });
+        } catch (e) {
+          torchBtn.style.display = 'none';
+        }
+      } else {
+        torchBtn.style.display = 'none';
+      }
+    } catch (err) {
+      console.log("Torch check error:", err);
+      if (torchBtn) torchBtn.style.display = 'none';
+    }
+  },
+
+  async toggle() {
+    if (!this.isSupported || !this.track) return false;
+    const torchBtn = document.getElementById('torch-toggle-btn');
+    this.isTorchOn = !this.isTorchOn;
+
+    try {
+      await this.track.applyConstraints({
+        advanced: [{ torch: this.isTorchOn }]
+      });
+      if (torchBtn) {
+        torchBtn.classList.toggle('active-torch', this.isTorchOn);
+      }
+    } catch (err) {
+      console.log("Torch toggle error:", err);
+      // Revert state if failed
+      this.isTorchOn = !this.isTorchOn;
+      if (torchBtn) {
+        torchBtn.classList.add('inactive');
+        torchBtn.title = "Flashlight unsupported or blocked";
+      }
+    }
+    return this.isTorchOn;
+  }
+};
+
 // Wait for DOM to load
 document.addEventListener("DOMContentLoaded", () => {
   // Create indicators
@@ -424,6 +512,15 @@ document.addEventListener("DOMContentLoaded", () => {
       audioManager.toggleMute();
     });
   }
+
+  // Flashlight (Torch) Toggle Button
+  const torchBtn = document.getElementById('torch-toggle-btn');
+  if (torchBtn) {
+    torchBtn.addEventListener('click', () => {
+      torchManager.toggle();
+    });
+  }
+  torchManager.init();
 
   // Initialize nav state
   updateNav();

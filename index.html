@@ -53,9 +53,14 @@
 
   <!-- Top Collapsible Drawer (Controller Description) - Default: OPEN -->
   <div id="top-drawer" class="drawer top-drawer open">
-    <div id="info-panel" class="drawer-content panel-content">
+    <!-- Fixed Header that stays on screen -->
+    <div id="top-fixed-header" class="top-fixed-header">
       <h1 id="phase-title" class="panel-title">Controller Name</h1>
       <div id="phase-released" class="panel-released">Released: 19XX</div>
+    </div>
+    
+    <!-- Collapsible Description Box -->
+    <div id="info-panel" class="drawer-content panel-content">
       <p id="phase-history" class="panel-desc">History goes here...</p>
     </div>
     <button id="top-drawer-toggle" class="drawer-toggle top-toggle" aria-label="Toggle Description">

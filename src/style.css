@@ -642,8 +642,7 @@ video, canvas.a-canvas {
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
   border: 1px solid rgba(255, 255, 255, 0.12);
-  border-top: none;
-  border-radius: 0 0 12px 12px;
+  border-radius: 12px;
   padding: 1.2rem 1.5rem;
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4), inset 0 0 15px rgba(0, 243, 255, 0.1);
   max-height: 450px;
@@ -666,8 +665,8 @@ video, canvas.a-canvas {
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
   border: 1px solid rgba(255, 255, 255, 0.12);
-  border-top: none;
-  border-radius: 0 0 12px 12px;
+  border-radius: 12px;
+  margin-top: 5px;
   padding: 0.35rem 1.2rem;
   color: var(--accent);
   font-family: 'Inter', sans-serif;
@@ -743,18 +742,18 @@ video, canvas.a-canvas {
   border-color: #00f3ff;
 }
 
-/* Override standalone panel padding and backgrounds inside drawers */
-#top-drawer #info-panel {
-  margin-top: 0 !important;
-  background: transparent !important;
-  border: none !important;
-  box-shadow: none !important;
-  backdrop-filter: none !important;
-  -webkit-backdrop-filter: none !important;
-  padding: 0 !important;
-  margin-bottom: 0.5rem !important;
+.top-fixed-header {
+  pointer-events: auto;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 60px; /* Add space so it's not too close to the top */
+  margin-bottom: 10px;
+  z-index: 96;
 }
 
+/* Override standalone panel padding and backgrounds inside drawers */
 #bottom-drawer #features-panel {
   width: 100% !important;
   padding-bottom: 0 !important;

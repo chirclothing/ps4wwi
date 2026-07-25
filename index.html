@@ -17,9 +17,9 @@
 <!-- Instruction Modal (shown at start) -->
 <div id="instruction-modal" class="modal-overlay">
   <div class="modal-content">
-    <h2>3D Interaction</h2>
-    <p>👆 Swipe with <strong>1 finger</strong> to rotate the controller models.</p>
-    <p>✌️ Pinch with <strong>2 fingers</strong> to zoom in and out.</p>
+    <h2>AR Interaction Guidance</h2>
+    <p>🎮 <strong>Rotate the IRL PS4 controller</strong> to see the object from all sides, but keep the top of the IRL PS4 controller visible to the camera.</p>
+    <p>✌️ Pinch with <strong>2 fingers</strong> on the screen to zoom in and out.</p>
     <button id="close-modal-btn">Got it!</button>
   </div>
 </div>
@@ -28,6 +28,9 @@
 <div id="ui-layer">
   <!-- Gameboy Title (Shown only in last phase) -->
   <div id="gameboy-title" class="gameboy-title" style="display: none;">Gameboy Tetris</div>
+
+  <!-- Audio Mute/Unmute Toggle Button (Top-Right) -->
+  <button id="audio-toggle-btn" class="audio-btn" aria-label="Toggle Audio" title="Toggle Audio">🔊</button>
 
   <!-- Special Gift Button (Shown only in last phase) -->
   <button id="gift-btn" style="display: none;" aria-label="Claim Gift">🎁</button>
@@ -45,86 +48,94 @@
     </div>
   </div>
 
-<!-- Info Panel for Phases 0-10 -->
-<div id="info-panel" class="panel-content">
-<h1 id="phase-title" class="panel-title">Controller Name</h1>
-<div id="phase-released" class="panel-released">Released: 19XX</div>
-<p id="phase-history" class="panel-desc">History goes here...</p>
-</div>
+  <!-- Top Collapsible Drawer (Controller Description) - Default: OPEN -->
+  <div id="top-drawer" class="drawer top-drawer open">
+    <div id="info-panel" class="drawer-content panel-content">
+      <h1 id="phase-title" class="panel-title">Controller Name</h1>
+      <div id="phase-released" class="panel-released">Released: 19XX</div>
+      <p id="phase-history" class="panel-desc">History goes here...</p>
+    </div>
+    <button id="top-drawer-toggle" class="drawer-toggle top-toggle" aria-label="Toggle Description">
+      <span id="top-toggle-text">Controller Info</span>
+      <span id="top-toggle-arrow">▼</span>
+    </button>
+  </div>
 
-<!-- GameBoy Panel for Phase 11 -->
-<div id="gameboy-panel" class="panel-gameboy" style="display: none;">
-<div class="gameboy-body">
-<div class="gameboy-screen-bezel">
-<div class="screen-header">
-<span class="power-light"></span>
-<span>BATTERY</span>
-</div>
-<canvas id="game-canvas" width="160" height="144"></canvas>
-</div>
+  <!-- GameBoy Panel for Phase 11 -->
+  <div id="gameboy-panel" class="panel-gameboy" style="display: none;">
+    <div class="gameboy-body">
+      <div class="gameboy-screen-bezel">
+        <div class="screen-header">
+          <span class="power-light"></span>
+          <span>BATTERY</span>
+        </div>
+        <canvas id="game-canvas" width="160" height="144"></canvas>
+      </div>
 
-<div class="gameboy-controls">
-<div class="dpad">
-<!-- Invisible click targets first so sibling selectors work -->
-<div class="dpad-button up" id="btn-up"></div>
-<div class="dpad-button down" id="btn-down"></div>
-<div class="dpad-button left" id="btn-left"></div>
-<div class="dpad-button right" id="btn-right"></div>
-<!-- Visual parts -->
-<div class="dpad-vertical"></div>
-<div class="dpad-horizontal"></div>
-<div class="dpad-center"></div>
-</div>
-<div class="action-buttons">
-<div class="action-button-group">
-<button class="action-btn b" id="btn-b"></button>
-<span class="label">B</span>
-</div>
-<div class="action-button-group">
-<button class="action-btn a" id="btn-a"></button>
-<span class="label">A</span>
-</div>
-</div>
-</div>
-<div class="system-buttons">
-<div class="sys-btn-group">
-<div class="sys-btn select" id="btn-select"></div>
-<span class="label">SELECT</span>
-</div>
-<div class="sys-btn-group">
-<div class="sys-btn start" id="btn-start"></div>
-<span class="label">START</span>
-</div>
-</div>
-<div class="speaker-grill">
-<div></div><div></div><div></div><div></div><div></div><div></div>
-</div>
-</div>
-</div>
+      <div class="gameboy-controls">
+        <div class="dpad">
+          <!-- Invisible click targets first so sibling selectors work -->
+          <div class="dpad-button up" id="btn-up"></div>
+          <div class="dpad-button down" id="btn-down"></div>
+          <div class="dpad-button left" id="btn-left"></div>
+          <div class="dpad-button right" id="btn-right"></div>
+          <!-- Visual parts -->
+          <div class="dpad-vertical"></div>
+          <div class="dpad-horizontal"></div>
+          <div class="dpad-center"></div>
+        </div>
+        <div class="action-buttons">
+          <div class="action-button-group">
+            <button class="action-btn b" id="btn-b"></button>
+            <span class="label">B</span>
+          </div>
+          <div class="action-button-group">
+            <button class="action-btn a" id="btn-a"></button>
+            <span class="label">A</span>
+          </div>
+        </div>
+      </div>
+      <div class="system-buttons">
+        <div class="sys-btn-group">
+          <div class="sys-btn select" id="btn-select"></div>
+          <span class="label">SELECT</span>
+        </div>
+        <div class="sys-btn-group">
+          <div class="sys-btn start" id="btn-start"></div>
+          <span class="label">START</span>
+        </div>
+      </div>
+      <div class="speaker-grill">
+        <div></div><div></div><div></div><div></div><div></div><div></div>
+      </div>
+    </div>
+  </div>
 
-<!-- Bottom UI -->
-<div id="bottom-ui" style="display: flex; flex-direction: column; align-items: center; width: 100%;">
-<!-- Features Panel -->
-<div id="features-panel" class="features-section">
-<h3>Unique Features</h3>
-<ul id="phase-features" class="features-list">
-<!-- Populated via JS -->
-</ul>
-</div>
+  <!-- Bottom Collapsible Sheet (Unique Features) - Default: CLOSED -->
+  <div id="bottom-drawer" class="drawer bottom-drawer collapsed" style="display: flex;">
+    <button id="bottom-drawer-toggle" class="drawer-toggle bottom-toggle" aria-label="Toggle Features">
+      <span id="bottom-toggle-text">Unique Features</span>
+      <span id="bottom-toggle-arrow">▲</span>
+    </button>
+    <div id="features-panel" class="drawer-content features-section">
+      <ul id="phase-features" class="features-list">
+        <!-- Populated via JS -->
+      </ul>
+    </div>
+  </div>
 
-<!-- Navigation UI -->
-<nav class="carousel-nav">
-<button id="nav-prev" class="nav-button" aria-label="Previous Panel">
-<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
-</button>
-<div class="nav-indicators" id="nav-indicators">
-<!-- Populated via JS -->
-</div>
-<button id="nav-next" class="nav-button" aria-label="Next Panel">
-<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
-</button>
-</nav>
-</div>
+  <!-- Navigation UI (Fixed at bottom) -->
+  <nav class="carousel-nav">
+    <button id="nav-prev" class="nav-button" aria-label="Previous Panel">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+    </button>
+    <div class="nav-indicators" id="nav-indicators">
+      <!-- Populated via JS -->
+    </div>
+    <button id="nav-next" class="nav-button" aria-label="Next Panel">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
+    </button>
+  </nav>
 </div>
 
 <!-- WebAR Scene Layer -->
